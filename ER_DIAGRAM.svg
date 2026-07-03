@@ -1,0 +1,238 @@
+<svg viewBox="0 0 1300 900" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="crowMany" markerWidth="20" markerHeight="20" refX="18" refY="10" orient="auto">
+      <path d="M2,2 L18,10 L2,18" fill="none" stroke="#334155" stroke-width="1.5"/>
+      <line x1="10" y1="4" x2="10" y2="16" stroke="#334155" stroke-width="1.5"/>
+    </marker>
+    <marker id="crowOne" markerWidth="20" markerHeight="20" refX="18" refY="10" orient="auto">
+      <line x1="12" y1="2" x2="12" y2="18" stroke="#334155" stroke-width="1.5"/>
+      <line x1="18" y1="2" x2="18" y2="18" stroke="#334155" stroke-width="1.5"/>
+    </marker>
+  </defs>
+
+  <rect width="1300" height="900" fill="#f8fafc"/>
+  <text x="650" y="36" text-anchor="middle" font-size="24" font-weight="bold" fill="#0f172a">Delipat Lead Management — Entity Relationship Diagram</text>
+  <text x="650" y="58" text-anchor="middle" font-size="13" fill="#64748b">Crow's-foot notation · MySQL via Prisma ORM</text>
+
+  <!-- ============ LEAD TABLE (Central Entity) ============ -->
+  <g>
+    <rect x="70" y="100" width="360" height="470" rx="10" fill="#ffffff" stroke="#2563eb" stroke-width="2.5"/>
+    <rect x="70" y="100" width="360" height="44" rx="10" fill="#2563eb"/>
+    <rect x="70" y="130" width="360" height="14" fill="#2563eb"/>
+    <text x="250" y="128" text-anchor="middle" font-size="19" font-weight="bold" fill="#ffffff">LEAD</text>
+
+    <line x1="70" y1="180" x2="430" y2="180" stroke="#dbeafe" stroke-width="1"/>
+
+    <rect x="70" y="156" width="360" height="24" fill="#eff6ff"/>
+    <circle cx="90" cy="168" r="6" fill="#f59e0b"/>
+    <text x="90" y="172" text-anchor="middle" font-size="9" font-weight="bold" fill="#ffffff">PK</text>
+    <text x="108" y="172" font-size="13" font-weight="bold" fill="#0f172a">id</text>
+    <text x="230" y="172" font-size="12" fill="#64748b">String (cuid)</text>
+
+    <text x="108" y="200" font-size="13" fill="#334155">name</text>
+    <text x="230" y="200" font-size="12" fill="#94a3b8">String, required</text>
+
+    <rect x="70" y="208" width="360" height="24" fill="#f0fdf4"/>
+    <text x="90" y="224" font-size="9" font-weight="bold" fill="#16a34a">UQ</text>
+    <text x="108" y="224" font-size="13" fill="#334155">email</text>
+    <text x="230" y="224" font-size="12" fill="#94a3b8">String, unique, required</text>
+
+    <text x="108" y="252" font-size="13" fill="#334155">phone</text>
+    <text x="230" y="252" font-size="12" fill="#94a3b8">String, required</text>
+
+    <text x="108" y="276" font-size="13" fill="#334155">company</text>
+    <text x="230" y="276" font-size="12" fill="#94a3b8">String, optional</text>
+
+    <text x="108" y="300" font-size="13" fill="#334155">industry</text>
+    <text x="230" y="300" font-size="12" fill="#94a3b8">String, required</text>
+
+    <text x="108" y="324" font-size="13" fill="#334155">companySize</text>
+    <text x="230" y="324" font-size="12" fill="#94a3b8">String (e.g. "11-50")</text>
+
+    <text x="108" y="348" font-size="13" fill="#334155">estimatedBudget</text>
+    <text x="230" y="348" font-size="12" fill="#94a3b8">Decimal(12,2), optional</text>
+
+    <text x="108" y="372" font-size="13" fill="#334155">projectDescription</text>
+    <text x="230" y="372" font-size="12" fill="#94a3b8">Text, required</text>
+
+    <text x="108" y="396" font-size="13" fill="#334155">status</text>
+    <text x="230" y="396" font-size="12" fill="#94a3b8">Enum LeadStatus</text>
+
+    <text x="108" y="420" font-size="13" fill="#334155">notes</text>
+    <text x="230" y="420" font-size="12" fill="#94a3b8">Text, optional</text>
+
+    <text x="108" y="444" font-size="13" fill="#334155">owner</text>
+    <text x="230" y="444" font-size="12" fill="#94a3b8">String, optional</text>
+
+    <text x="108" y="468" font-size="13" fill="#334155">followUpDate</text>
+    <text x="230" y="468" font-size="12" fill="#94a3b8">DateTime, optional</text>
+
+    <text x="108" y="492" font-size="13" fill="#334155">createdAt / updatedAt</text>
+    <text x="230" y="492" font-size="12" fill="#94a3b8">DateTime</text>
+
+    <line x1="70" y1="504" x2="430" y2="504" stroke="#dbeafe" stroke-width="1"/>
+    <text x="90" y="524" font-size="11" fill="#64748b" font-style="italic">Indexes:</text>
+    <text x="90" y="542" font-size="11" fill="#64748b">• email (lookup on submit)</text>
+    <text x="90" y="558" font-size="11" fill="#64748b">• status (dashboard filtering)</text>
+    <text x="90" y="574" font-size="11" fill="#64748b">• industry (analytics grouping)</text>
+  </g>
+
+  <!-- ============ QUALIFICATION TABLE ============ -->
+  <g>
+    <rect x="530" y="100" width="340" height="360" rx="10" fill="#ffffff" stroke="#16a34a" stroke-width="2.5"/>
+    <rect x="530" y="100" width="340" height="44" rx="10" fill="#16a34a"/>
+    <rect x="530" y="130" width="340" height="14" fill="#16a34a"/>
+    <text x="700" y="128" text-anchor="middle" font-size="19" font-weight="bold" fill="#ffffff">QUALIFICATION</text>
+
+    <rect x="530" y="156" width="340" height="24" fill="#f0fdf4"/>
+    <circle cx="550" cy="168" r="6" fill="#f59e0b"/>
+    <text x="550" y="172" text-anchor="middle" font-size="9" font-weight="bold" fill="#ffffff">PK</text>
+    <text x="568" y="172" font-size="13" font-weight="bold" fill="#0f172a">id</text>
+    <text x="690" y="172" font-size="12" fill="#64748b">String (cuid)</text>
+
+    <rect x="530" y="182" width="340" height="24" fill="#eff6ff"/>
+    <circle cx="550" cy="194" r="6" fill="#2563eb"/>
+    <text x="550" y="198" text-anchor="middle" font-size="8" font-weight="bold" fill="#ffffff">FK</text>
+    <text x="568" y="198" font-size="13" font-weight="bold" fill="#0f172a">leadId</text>
+    <text x="690" y="198" font-size="12" fill="#2563eb">→ Lead.id (unique)</text>
+
+    <text x="568" y="226" font-size="13" fill="#334155">leadScore</text>
+    <text x="690" y="226" font-size="12" fill="#94a3b8">Int, 0-100</text>
+
+    <text x="568" y="250" font-size="13" fill="#334155">temperature</text>
+    <text x="690" y="250" font-size="12" fill="#94a3b8">"Hot" | "Warm" | "Cold"</text>
+
+    <text x="568" y="274" font-size="13" fill="#334155">confidence</text>
+    <text x="690" y="274" font-size="12" fill="#94a3b8">Int, 0-100</text>
+
+    <text x="568" y="298" font-size="13" fill="#334155">reasoning</text>
+    <text x="690" y="298" font-size="12" fill="#94a3b8">Text</text>
+
+    <text x="568" y="322" font-size="13" fill="#334155">nextAction</text>
+    <text x="690" y="322" font-size="12" fill="#94a3b8">Text</text>
+
+    <text x="568" y="346" font-size="13" fill="#334155">aiModel</text>
+    <text x="690" y="346" font-size="12" fill="#94a3b8">String, default "claude-3-5-sonnet"</text>
+
+    <text x="568" y="370" font-size="13" fill="#334155">promptVersion</text>
+    <text x="690" y="370" font-size="12" fill="#94a3b8">String, default "v1"</text>
+
+    <text x="568" y="394" font-size="13" fill="#334155">createdAt / updatedAt</text>
+    <text x="690" y="394" font-size="12" fill="#94a3b8">DateTime</text>
+
+    <line x1="530" y1="406" x2="870" y2="406" stroke="#dcfce7" stroke-width="1"/>
+    <text x="550" y="426" font-size="11" fill="#64748b" font-style="italic">Indexes: temperature, leadScore</text>
+    <text x="550" y="444" font-size="11" fill="#64748b" font-style="italic">Written once per lead, by AI service</text>
+  </g>
+
+  <!-- ============ EMAIL TABLE ============ -->
+  <g>
+    <rect x="530" y="500" width="340" height="330" rx="10" fill="#ffffff" stroke="#d97706" stroke-width="2.5"/>
+    <rect x="530" y="500" width="340" height="44" rx="10" fill="#d97706"/>
+    <rect x="530" y="530" width="340" height="14" fill="#d97706"/>
+    <text x="700" y="528" text-anchor="middle" font-size="19" font-weight="bold" fill="#ffffff">EMAIL</text>
+
+    <rect x="530" y="556" width="340" height="24" fill="#fffbeb"/>
+    <circle cx="550" cy="568" r="6" fill="#f59e0b"/>
+    <text x="550" y="572" text-anchor="middle" font-size="9" font-weight="bold" fill="#ffffff">PK</text>
+    <text x="568" y="572" font-size="13" font-weight="bold" fill="#0f172a">id</text>
+    <text x="690" y="572" font-size="12" fill="#64748b">String (cuid)</text>
+
+    <rect x="530" y="582" width="340" height="24" fill="#eff6ff"/>
+    <circle cx="550" cy="594" r="6" fill="#2563eb"/>
+    <text x="550" y="598" text-anchor="middle" font-size="8" font-weight="bold" fill="#ffffff">FK</text>
+    <text x="568" y="598" font-size="13" font-weight="bold" fill="#0f172a">leadId</text>
+    <text x="690" y="598" font-size="12" fill="#2563eb">→ Lead.id (many rows)</text>
+
+    <text x="568" y="626" font-size="13" fill="#334155">type</text>
+    <text x="690" y="626" font-size="12" fill="#94a3b8">Enum EmailType</text>
+
+    <text x="568" y="650" font-size="13" fill="#334155">to / subject / body</text>
+    <text x="690" y="650" font-size="12" fill="#94a3b8">String / String / Text</text>
+
+    <text x="568" y="674" font-size="13" fill="#334155">status</text>
+    <text x="690" y="674" font-size="12" fill="#94a3b8">Enum EmailStatus</text>
+
+    <text x="568" y="698" font-size="13" fill="#334155">sentAt / openedAt / clickedAt</text>
+    <text x="690" y="698" font-size="12" fill="#94a3b8">DateTime, optional</text>
+
+    <text x="568" y="722" font-size="13" fill="#334155">personalized</text>
+    <text x="690" y="722" font-size="12" fill="#94a3b8">Boolean, default false</text>
+
+    <text x="568" y="746" font-size="13" fill="#334155">aiPersonalization</text>
+    <text x="690" y="746" font-size="12" fill="#94a3b8">Text, optional</text>
+
+    <text x="568" y="770" font-size="13" fill="#334155">createdAt / updatedAt</text>
+    <text x="690" y="770" font-size="12" fill="#94a3b8">DateTime</text>
+
+    <line x1="530" y1="782" x2="870" y2="782" stroke="#fef3c7" stroke-width="1"/>
+    <text x="550" y="802" font-size="11" fill="#64748b" font-style="italic">Indexes: leadId, status, type</text>
+  </g>
+
+  <!-- ============ METRICS TABLE (denormalized cache, no FK) ============ -->
+  <g>
+    <rect x="970" y="100" width="270" height="260" rx="10" fill="#ffffff" stroke="#7c3aed" stroke-width="2.5"/>
+    <rect x="970" y="100" width="270" height="44" rx="10" fill="#7c3aed"/>
+    <rect x="970" y="130" width="270" height="14" fill="#7c3aed"/>
+    <text x="1105" y="128" text-anchor="middle" font-size="19" font-weight="bold" fill="#ffffff">METRICS</text>
+
+    <rect x="970" y="156" width="270" height="24" fill="#f5f3ff"/>
+    <circle cx="990" cy="168" r="6" fill="#f59e0b"/>
+    <text x="990" y="172" text-anchor="middle" font-size="9" font-weight="bold" fill="#ffffff">PK</text>
+    <text x="1008" y="172" font-size="13" font-weight="bold" fill="#0f172a">id</text>
+
+    <text x="1008" y="200" font-size="13" fill="#334155">totalLeads</text>
+    <text x="1008" y="224" font-size="13" fill="#334155">newLeads / qualifiedLeads</text>
+    <text x="1008" y="248" font-size="13" fill="#334155">lostLeads</text>
+    <text x="1008" y="272" font-size="13" fill="#334155">hot/warm/coldLeads</text>
+    <text x="1008" y="296" font-size="13" fill="#334155">averageScore</text>
+    <text x="1008" y="320" font-size="13" fill="#334155">lastUpdated</text>
+
+    <line x1="970" y1="332" x2="1240" y2="332" stroke="#ede9fe" stroke-width="1"/>
+    <text x="990" y="350" font-size="11" fill="#64748b" font-style="italic">No FK — aggregate snapshot,</text>
+    <text x="990" y="366" font-size="11" fill="#64748b" font-style="italic">not live-joined in current build</text>
+    <text x="990" y="382" font-size="11" fill="#64748b" font-style="italic">(dashboard computes live instead)</text>
+  </g>
+
+  <!-- RELATIONSHIP: Lead (1) to Qualification (1) -->
+  <line x1="430" y1="196" x2="530" y2="196" stroke="#334155" stroke-width="2" marker-end="url(#crowOne)" marker-start="url(#crowOne)"/>
+  <rect x="450" y="176" width="60" height="20" rx="4" fill="#fef3c7" stroke="#f59e0b"/>
+  <text x="480" y="190" text-anchor="middle" font-size="11" font-weight="bold" fill="#92400e">1 : 1</text>
+  <text x="480" y="216" text-anchor="middle" font-size="10" fill="#64748b">has</text>
+
+  <!-- RELATIONSHIP: Lead (1) to Email (many) -->
+  <path d="M 430 570 C 480 570, 480 596, 530 596" stroke="#334155" stroke-width="2" fill="none" marker-end="url(#crowMany)" marker-start="url(#crowOne)"/>
+  <rect x="450" y="580" width="60" height="20" rx="4" fill="#fef3c7" stroke="#f59e0b"/>
+  <text x="480" y="594" text-anchor="middle" font-size="11" font-weight="bold" fill="#92400e">1 : N</text>
+  <text x="450" y="620" text-anchor="middle" font-size="10" fill="#64748b" font-style="italic">receives</text>
+
+  <!-- ============ LEGEND ============ -->
+  <g>
+    <rect x="970" y="400" width="270" height="240" rx="10" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+    <text x="990" y="426" font-size="14" font-weight="bold" fill="#0f172a">Legend</text>
+
+    <circle cx="1000" cy="446" r="6" fill="#f59e0b"/>
+    <text x="1000" y="450" text-anchor="middle" font-size="8" font-weight="bold" fill="#ffffff">PK</text>
+    <text x="1015" y="450" font-size="12" fill="#334155">Primary Key</text>
+
+    <circle cx="1000" cy="470" r="6" fill="#2563eb"/>
+    <text x="1000" y="474" text-anchor="middle" font-size="8" font-weight="bold" fill="#ffffff">FK</text>
+    <text x="1015" y="474" font-size="12" fill="#334155">Foreign Key</text>
+
+    <text x="1000" y="498" font-size="10" font-weight="bold" fill="#16a34a">UQ</text>
+    <text x="1015" y="498" font-size="12" fill="#334155">Unique Constraint</text>
+
+    <line x1="995" y1="518" x2="1015" y2="518" stroke="#334155" stroke-width="2" marker-end="url(#crowOne)"/>
+    <text x="1025" y="522" font-size="12" fill="#334155">"exactly one" side</text>
+
+    <line x1="995" y1="542" x2="1015" y2="542" stroke="#334155" stroke-width="2" marker-end="url(#crowMany)"/>
+    <text x="1025" y="546" font-size="12" fill="#334155">"many" side</text>
+
+    <text x="990" y="570" font-size="12" fill="#334155">Lead → Qualification: 1:1</text>
+    <text x="990" y="590" font-size="11" fill="#64748b">created after AI scoring completes</text>
+    <text x="990" y="610" font-size="12" fill="#334155">Lead → Email: 1:N</text>
+    <text x="990" y="628" font-size="11" fill="#64748b">acknowledgement + follow-ups</text>
+  </g>
+
+  <text x="70" y="860" font-size="11" fill="#94a3b8" font-style="italic">Both Qualification and Email use onDelete: Cascade — deleting a Lead removes its qualification and email history.</text>
+</svg>

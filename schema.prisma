@@ -1,0 +1,141 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Lead Model - Captures visitor information
+model Lead {
+  id                String    @id @default(cuid())
+  name              String
+  email             String    @unique
+  phone             String
+  company           String?
+  industry          String
+  companySize       String    // e.g., "1-10", "11-50", "51-200"
+  estimatedBudget   Decimal?  @db.Decimal(12, 2)
+  projectDescription String   @db.LongText
+  
+  // Lead status and management
+  status            LeadStatus @default(NEW)
+  notes             String?    @db.LongText
+  owner             String?    // Sales person assigned
+  followUpDate      DateTime?
+  
+  // AI Qualification
+  qualification     Qualification?
+  
+  // Email tracking
+  emails            Email[]
+  
+  // Timestamps
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@index([industry])
+}
+
+// Lead Status Enum
+enum LeadStatus {
+  NEW
+  QUALIFIED
+  LOST
+  CONTACTED
+  CLOSED
+}
+
+// AI Qualification Result
+model Qualification {
+  id                String   @id @default(cuid())
+  lead              Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  leadId            String   @unique
+  
+  // AI Scoring Results
+  leadScore         Int      // 0-100
+  temperature       String   // "Hot", "Warm", "Cold"
+  confidence        Int      // 0-100
+  reasoning         String   @db.LongText
+  nextAction        String   @db.LongText
+  
+  // AI Model Info
+  aiModel           String   @default("claude-3-sonnet-20240229")
+  promptVersion     String   @default("v1")
+  
+  // Timestamps
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([temperature])
+  @@index([leadScore])
+}
+
+// Email Communication
+model Email {
+  id                String   @id @default(cuid())
+  lead              Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  leadId            String
+  
+  // Email details
+  type              EmailType
+  to                String
+  subject           String
+  body              String   @db.LongText
+  status            EmailStatus @default(PENDING)
+  
+  // Tracking
+  sentAt            DateTime?
+  openedAt          DateTime?
+  clickedAt         DateTime?
+  
+  // Personalization
+  personalized      Boolean  @default(false)
+  aiPersonalization String?  @db.LongText
+  
+  // Timestamps
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([leadId])
+  @@index([status])
+  @@index([type])
+}
+
+enum EmailType {
+  ACKNOWLEDGEMENT
+  FOLLOW_UP
+  REMINDER
+  CUSTOM
+}
+
+enum EmailStatus {
+  PENDING
+  SENT
+  FAILED
+  OPENED
+}
+
+// Dashboard Metrics (aggregated)
+model Metrics {
+  id                String   @id @default(cuid())
+  totalLeads        Int      @default(0)
+  newLeads          Int      @default(0)
+  qualifiedLeads    Int      @default(0)
+  lostLeads         Int      @default(0)
+  
+  // Additional stats
+  hotLeads          Int      @default(0)
+  warmLeads         Int      @default(0)
+  coldLeads         Int      @default(0)
+  averageScore      Decimal? @db.Decimal(5, 2)
+  
+  // Timestamps
+  lastUpdated       DateTime @default(now()) @updatedAt
+}
